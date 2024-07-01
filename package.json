@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",
     "react-app-rewire-alias": "^1.1.7",
@@ -29,13 +26,22 @@
     "web3": "^4.10.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/chai": "^4.3.16",
+    "@types/jest": "^27.5.2",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^16.18.101",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@types/react-redux": "^7.1.33",
     "@types/react-router-dom": "^5.3.3",
     "@types/web3": "^1.2.2",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.101",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0"
+    "chai": "^5.1.1",
+    "chai-as-promised": "^8.0.0",
+    "chai-bignumber": "^3.1.0",
+    "mocha": "^10.5.2"
   },
   "eslintConfig": {
     "extends": [
