@@ -1,0 +1,16 @@
+@import "../../../app/styles/common/mixins";
+
+.navbar {
+  background: black;
+  height: rem(50px);
+
+  &__link {
+    color: white;
+  }
+
+  &__list {
+    &-small {
+      color: white;
+    }
+  }
+}

@@ -10,6 +10,7 @@
     "typechain": "typechain --target truffle --outDir types/truffle-contracts './src/truffle_abis/*.json'"
   },
   "dependencies": {
+    "@metamask/detect-provider": "^2.0.0",
     "@reduxjs/toolkit": "^2.2.6",
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",

@@ -11,7 +11,7 @@ const AppRouter = () => {
 
   useEffect(() => {
     checkUserLogin()
-  }, [isAuth])
+  }, [checkUserLogin, isAuth])
 
   return isAuth ? (
     <div className="app">
