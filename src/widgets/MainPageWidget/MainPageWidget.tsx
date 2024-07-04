@@ -11,6 +11,7 @@ import type {
 import Tether from "@/truffle_abis/Tether.json"
 import RWD from "@/truffle_abis/RWD.json"
 import DecentralBank from "@/truffle_abis/DecentralBank.json"
+import { MainContent } from "./components"
 
 const MainPageWidget = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -60,7 +61,7 @@ const MainPageWidget = () => {
         const rwdBal = (await rwdContract.methods
           .balanceOf(accounts[0])
           .call()) as string
-        setTetherBalance(rwdBal.toString())
+        setRwdBalance(rwdBal.toString())
       } else {
         console.error("RWD contract not deployed to detect network")
       }
@@ -99,15 +100,25 @@ const MainPageWidget = () => {
 
   return (
     <div className="main-page-widget">
-      {isLoading && <TheNavbar account={accountValue} />}
+      <TheNavbar account={accountValue} />
 
-      <h1>Hello</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, illo ut
-        dolore, nam esse consectetur animi aliquam aspernatur odit,
-        exercitationem tempore eos suscipit hic voluptatem. Fugiat sint nisi at
-        consectetur.
-      </p>
+      <div className="container-fluid mt-5">
+        <div className="row justify-content-center">
+          <main
+            role="main"
+            className="main-page-widget__main col-lg-12 col-md-10 col-sm-12"
+          >
+            <div>
+              <MainContent
+                tetherBalance={tetherBalance}
+                rwdBalance={rwdBalance}
+                stakingBalance={stakingBalance}
+                decentralBankContract={decentralBank}
+              />
+            </div>
+          </main>
+        </div>
+      </div>
     </div>
   )
 }

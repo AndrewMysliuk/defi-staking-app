@@ -1,0 +1,25 @@
+@import "../../../../app/styles/common/mixins";
+
+.main-content {
+  &__card {
+    opacity: 0.9;
+  }
+
+  &__form {
+    &-wrapper {
+      border-spacing: 0 rem(16px);
+    }
+
+    &-label {
+      margin-left: rem(16px);
+    }
+
+    &-balance {
+      margin-right: rem(8px);
+    }
+  }
+
+  &__airdrop {
+    color: blue;
+  }
+}

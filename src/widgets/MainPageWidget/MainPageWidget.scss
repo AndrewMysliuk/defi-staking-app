@@ -5,4 +5,9 @@
   height: 100vh;
   box-sizing: border-box;
   padding: rem(50px 0 0 0);
+
+  &__main {
+    max-width: rem(600px);
+    min-height: 100%;
+  }
 }
