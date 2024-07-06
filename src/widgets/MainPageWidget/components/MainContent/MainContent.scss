@@ -5,6 +5,30 @@
     opacity: 0.9;
   }
 
+  &__block {
+    position: relative;
+    z-index: 10;
+    margin-bottom: rem(24px);
+    border-radius: rem(4px);
+
+    &-row {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      padding: rem(8px);
+
+      &:not(:first-child) {
+        border-top: rem(1px solid white);
+      }
+    }
+
+    &-col {
+      flex: 0 0 50%;
+      text-align: center;
+      color: white;
+    }
+  }
+
   &__form {
     &-wrapper {
       border-spacing: 0 rem(16px);

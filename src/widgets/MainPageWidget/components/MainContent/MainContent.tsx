@@ -1,44 +1,57 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import "./MainContent.scss"
-import { Contract, ContractAbi } from "web3"
+import Web3 from "web3"
+import { Airdrop } from "./ui"
 
 interface MainContentProps {
   tetherBalance: string
   rwdBalance: string
   stakingBalance: string
-  decentralBankContract: Contract<ContractAbi> | null
+  stakeTokens: (amount: string) => void
+  unstakeTokens: () => void
 }
 
 const MainContent: FC<MainContentProps> = ({
   tetherBalance,
   rwdBalance,
   stakingBalance,
-  decentralBankContract,
+  stakeTokens,
+  unstakeTokens,
 }) => {
+  const [inputValue, setInputValue] = useState<string>("")
+
+  const depositHandler = () => {
+    stakeTokens(Web3.utils.toWei(inputValue, "ether"))
+  }
+
+  const withdrawHandler = () => {
+    unstakeTokens()
+  }
+
   return (
     <div id="content" className="mt-3">
-      <table className="table text-muted text-center">
-        <thead>
-          <tr>
-            <th scope="col">Staking Balance</th>
-            <th scope="col">Reward Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>USDT</td>
-            <td>RWD</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="main-content__block">
+        <div className="main-content__block-row">
+          <div className="main-content__block-col">Staking Balance</div>
+          <div className="main-content__block-col">Reward Balance</div>
+        </div>
+        <div className="main-content__block-row">
+          <div className="main-content__block-col">
+            {Web3.utils.fromWei(Number(stakingBalance), "ether")} USDT
+          </div>
+          <div className="main-content__block-col">
+            {Web3.utils.fromWei(Number(rwdBalance), "ether")} RWD
+          </div>
+        </div>
+      </div>
       <div className="main-content__card card mb-2">
         <form className="main-content__form mb-3">
           <div className="main-content__form-wrapper">
-            <label className="main-content__form-label float-start">
+            <label className="main-content__form-label float-start mb-3">
               <b>Stake Tokens</b>
             </label>
-            <span className="main-content__form-balance float-end">
-              Balance:
+            <span className="main-content__form-balance float-end mb-3">
+              Balance: {Web3.utils.fromWei(Number(tetherBalance), "ether")}
             </span>
             <div className="input-group mb-4">
               <input
@@ -46,17 +59,27 @@ const MainContent: FC<MainContentProps> = ({
                 className="form-control"
                 placeholder="0"
                 required
+                value={inputValue}
+                onChange={(event) => setInputValue(event.target.value)}
               />
               <div className="input-group-append">
                 <div className="input-group-text">USDT</div>
               </div>
             </div>
-            <button type="button" className="btn btn-primary btn-lg w-100">
+            <button
+              onClick={depositHandler}
+              type="button"
+              className="btn btn-primary btn-lg w-100"
+            >
               DEPOSIT
             </button>
           </div>
         </form>
-        <button type="button" className="btn btn-primary btn-lg w-100">
+        <button
+          onClick={withdrawHandler}
+          type="button"
+          className="btn btn-primary btn-lg w-100"
+        >
           WITHDRAW
         </button>
         <div
@@ -64,10 +87,7 @@ const MainContent: FC<MainContentProps> = ({
           style={{ color: "blue" }}
         >
           AIRDROP
-          {/* <Airdrop
-      stakingBalance={this.props.stakingBalance}
-      decentralBankContract={this.props.decentralBankContract}
-    /> */}
+          <Airdrop stakingBalance={stakingBalance} />
         </div>
       </div>
     </div>

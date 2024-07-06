@@ -11,7 +11,7 @@ import type {
 import Tether from "@/truffle_abis/Tether.json"
 import RWD from "@/truffle_abis/RWD.json"
 import DecentralBank from "@/truffle_abis/DecentralBank.json"
-import { MainContent } from "./components"
+import { MainContent, ParticleSettings } from "./components"
 
 const MainPageWidget = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -23,6 +23,50 @@ const MainPageWidget = () => {
   const [rwd, setRwd] = useState<Contract<ContractAbi> | null>(null)
   const [decentralBank, setDecentralBank] =
     useState<Contract<ContractAbi> | null>(null)
+
+  const stakeTokens = async (amount: string) => {
+    try {
+      setIsLoading(true)
+
+      // Approve txn
+      const approveReceipt = await tether?.methods
+        .approve(decentralBank?.options?.address, amount)
+        .send({ from: accountValue })
+
+      if (approveReceipt)
+        console.log("Approve transaction hash:", approveReceipt.transactionHash)
+
+      // Tokens Deposit
+      const depositReceipt = await decentralBank?.methods
+        .depositTokens(amount)
+        .send({ from: accountValue })
+
+      if (depositReceipt)
+        console.log("Deposit transaction hash:", depositReceipt.transactionHash)
+    } catch (error) {
+      console.error("Error in stakeTokens:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const unstakeTokens = async () => {
+    try {
+      setIsLoading(true)
+
+      // Unstake Tokens
+      const unstakeReceipt = await decentralBank?.methods
+        .unstakeTokens()
+        .send({ from: accountValue })
+
+      if (unstakeReceipt)
+        console.log("Unstake transaction hash:", unstakeReceipt.transactionHash)
+    } catch (error) {
+      console.error("Error in unstakeTokens:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const initBlockChainData = async (web3: Web3 | null) => {
     if (web3) {
@@ -100,6 +144,8 @@ const MainPageWidget = () => {
 
   return (
     <div className="main-page-widget">
+      <ParticleSettings />
+
       <TheNavbar account={accountValue} />
 
       <div className="container-fluid mt-5">
@@ -109,12 +155,17 @@ const MainPageWidget = () => {
             className="main-page-widget__main col-lg-12 col-md-10 col-sm-12"
           >
             <div>
-              <MainContent
-                tetherBalance={tetherBalance}
-                rwdBalance={rwdBalance}
-                stakingBalance={stakingBalance}
-                decentralBankContract={decentralBank}
-              />
+              {isLoading ? (
+                <p className="text-center">Loading</p>
+              ) : (
+                <MainContent
+                  tetherBalance={tetherBalance}
+                  rwdBalance={rwdBalance}
+                  stakingBalance={stakingBalance}
+                  stakeTokens={stakeTokens}
+                  unstakeTokens={unstakeTokens}
+                />
+              )}
             </div>
           </main>
         </div>

@@ -6586,12 +6586,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xecD31ca64E598e0d85D0Da2Ad980c08D5C51ed9B",
-      "transactionHash": "0xd83b865398f0d2bb5ba6b2663272ff9b1a41d15d09a71b1a38f78bf6bb0965f0"
+      "address": "0x6eB50eEcD5ae8023A35Bc319Fa9cf8Ba293CdEe8",
+      "transactionHash": "0xfaa42b6c1a28af15b9f46a4c8647ec16725dc6dbbbe230ce476a0c6a193a19d2"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-07-02T20:33:17.403Z",
+  "updatedAt": "2024-07-06T09:26:50.241Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
