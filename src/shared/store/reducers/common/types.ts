@@ -1,12 +1,11 @@
 export interface CommonState {
   isAuth: boolean
-  counter: number
+  isLoading: boolean
 }
 
 export enum CommonActionsEnum {
   SET_AUTH = "SET_AUTH",
-  ADD_COUNTER = "ADD_COUNTER",
-  REMOVE_COUNTER = "REMOVE_COUNTER",
+  SET_IS_LOADING = "SET_IS_LOADING",
 }
 
 export interface SetAuthAction {
@@ -14,17 +13,9 @@ export interface SetAuthAction {
   payload: boolean
 }
 
-export interface AddCounterAction {
-  type: CommonActionsEnum.ADD_COUNTER
-  payload: number
+export interface SetIsLoading {
+  type: CommonActionsEnum.SET_IS_LOADING
+  payload: boolean
 }
 
-export interface RemoveCounterAction {
-  type: CommonActionsEnum.REMOVE_COUNTER
-  payload: number
-}
-
-export type CommonAction =
-  | SetAuthAction
-  | AddCounterAction
-  | RemoveCounterAction
+export type CommonAction = SetAuthAction | SetIsLoading

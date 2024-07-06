@@ -1,10 +1,5 @@
 import { AppDispatch } from "../.."
-import {
-  CommonActionsEnum,
-  SetAuthAction,
-  AddCounterAction,
-  RemoveCounterAction,
-} from "./types"
+import { CommonActionsEnum, SetAuthAction, SetIsLoading } from "./types"
 
 export const CommonActionCreators = {
   setIsAuth: (auth: boolean): SetAuthAction => ({
@@ -12,18 +7,13 @@ export const CommonActionCreators = {
     payload: auth,
   }),
 
+  setIsLoading: (value: boolean): SetIsLoading => ({
+    type: CommonActionsEnum.SET_IS_LOADING,
+    payload: value,
+  }),
+
   checkUserLogin: () => async (dispatch: AppDispatch) => {
     // TODO Check Is User Login
     // dispatch(CommonActionCreators.setIsAuth(true))
   },
-
-  addCounter: (value: number): AddCounterAction => ({
-    type: CommonActionsEnum.ADD_COUNTER,
-    payload: value,
-  }),
-
-  removeCounter: (value: number): RemoveCounterAction => ({
-    type: CommonActionsEnum.REMOVE_COUNTER,
-    payload: value,
-  }),
 }

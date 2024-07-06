@@ -2,10 +2,10 @@ import { CommonAction, CommonActionsEnum, CommonState } from "./types"
 
 const initialStore: CommonState = {
   isAuth: false,
-  counter: 0,
+  isLoading: true,
 }
 
-export default function userReducer(
+export default function commonReducer(
   state = initialStore,
   action: CommonAction
 ): CommonState {
@@ -13,11 +13,8 @@ export default function userReducer(
     case CommonActionsEnum.SET_AUTH:
       return { ...state, isAuth: action.payload }
 
-    case CommonActionsEnum.ADD_COUNTER:
-      return { ...state, counter: state.counter + action.payload }
-
-    case CommonActionsEnum.REMOVE_COUNTER:
-      return { ...state, counter: state.counter - action.payload }
+    case CommonActionsEnum.SET_IS_LOADING:
+      return { ...state, isLoading: action.payload }
 
     default:
       return state

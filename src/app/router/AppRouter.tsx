@@ -1,8 +1,7 @@
 import { useEffect } from "react"
 import { Route, Routes, Navigate } from "react-router-dom"
 import { RouteNames, privateRoutes, publicRoutes } from "."
-import { useTypedSelector } from "@/shared/hooks/useTypedSelector"
-import { useActions } from "@/shared/hooks/useActions"
+import { useActions, useTypedSelector } from "@/shared/hooks"
 
 const AppRouter = () => {
   const { isAuth } = useTypedSelector((state) => state.common)
