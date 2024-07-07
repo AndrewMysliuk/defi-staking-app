@@ -6,6 +6,16 @@ import {
   getDecentralBankContract,
   stakeTokensOnDecentralBank,
   unstakeTokensFromDecentralBank,
+  // giveRewardForUser,
 } from "./web3"
 
-export { getAccounts, getNetworkId, getTetherContract, getRwdContract, getDecentralBankContract, stakeTokensOnDecentralBank, unstakeTokensFromDecentralBank }
+export {
+  getAccounts,
+  getNetworkId,
+  getTetherContract,
+  getRwdContract,
+  getDecentralBankContract,
+  stakeTokensOnDecentralBank,
+  unstakeTokensFromDecentralBank,
+  // giveRewardForUser,
+}

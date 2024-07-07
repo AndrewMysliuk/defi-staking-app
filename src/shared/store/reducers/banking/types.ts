@@ -32,8 +32,4 @@ export interface SetStakingBalance {
   payload: string
 }
 
-export type BankingAction =
-  | SetAccountValue
-  | SetTetherBalance
-  | SetRwdBalance
-  | SetStakingBalance
+export type BankingAction = SetAccountValue | SetTetherBalance | SetRwdBalance | SetStakingBalance

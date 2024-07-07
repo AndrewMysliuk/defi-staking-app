@@ -48,11 +48,7 @@ contract("DecentralBank", ([owner, customer]) => {
     it("rewards tokens for staking", async () => {
       // Check initial balance before staking
       let result = await tether.balanceOf(customer)
-      assert.equal(
-        result.toString(),
-        tokens("100"),
-        "customer mock wallet balance before staking"
-      )
+      assert.equal(result.toString(), tokens("100"), "customer mock wallet balance before staking")
 
       // Approve and deposit tokens
       await tether.approve(decentralBank.address, tokens("100"), {
@@ -62,25 +58,13 @@ contract("DecentralBank", ([owner, customer]) => {
 
       // Check balances after staking
       result = await tether.balanceOf(customer)
-      assert.equal(
-        result.toString(),
-        tokens("0"),
-        "customer mock wallet balance after staking"
-      )
+      assert.equal(result.toString(), tokens("0"), "customer mock wallet balance after staking")
 
       result = await tether.balanceOf(decentralBank.address)
-      assert.equal(
-        result.toString(),
-        tokens("100"),
-        "decentral bank mock wallet balance after staking"
-      )
+      assert.equal(result.toString(), tokens("100"), "decentral bank mock wallet balance after staking")
 
       result = await decentralBank.isStaking(customer)
-      assert.equal(
-        result.toString(),
-        "true",
-        "customer staking status to be true"
-      )
+      assert.equal(result.toString(), "true", "customer staking status to be true")
 
       // Issue tokens
       await decentralBank.issueTokens({ from: owner })
@@ -90,11 +74,7 @@ contract("DecentralBank", ([owner, customer]) => {
         await decentralBank.issueTokens({ from: customer })
         assert.fail("The transaction should have thrown an error")
       } catch (err) {
-        assert.include(
-          err.message,
-          "Caller must be the owner",
-          "The error message should contain 'Caller must be the owner'"
-        )
+        assert.include(err.message, "Caller must be the owner", "The error message should contain 'Caller must be the owner'")
       }
 
       // Unstake tokens
@@ -102,25 +82,13 @@ contract("DecentralBank", ([owner, customer]) => {
 
       // Check balances after unstaking
       result = await tether.balanceOf(customer)
-      assert.equal(
-        result.toString(),
-        tokens("100"),
-        "customer mock wallet balance after unstaking"
-      )
+      assert.equal(result.toString(), tokens("100"), "customer mock wallet balance after unstaking")
 
       result = await tether.balanceOf(decentralBank.address)
-      assert.equal(
-        result.toString(),
-        tokens("0"),
-        "decentral bank mock wallet balance after unstaking"
-      )
+      assert.equal(result.toString(), tokens("0"), "decentral bank mock wallet balance after unstaking")
 
       result = await decentralBank.isStaking(customer)
-      assert.equal(
-        result.toString(),
-        "false",
-        "customer staking status to be false"
-      )
+      assert.equal(result.toString(), "false", "customer staking status to be false")
     })
   })
 })

@@ -1,12 +1,5 @@
 // import { AppDispatch } from "../.."
-import { Contract, ContractAbi } from "web3"
-import {
-  BankingActionEnum,
-  SetAccountValue,
-  SetRwdBalance,
-  SetStakingBalance,
-  SetTetherBalance,
-} from "./types"
+import { BankingActionEnum, SetAccountValue, SetRwdBalance, SetStakingBalance, SetTetherBalance } from "./types"
 
 export const BankingActionCreators = {
   setAccountValue: (address: string): SetAccountValue => ({

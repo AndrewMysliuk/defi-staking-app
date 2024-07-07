@@ -7,3 +7,5 @@ module.exports = async function issueRewards(callback) {
 
   callback()
 }
+
+// truffle exec ./scripts/issue-tokens.js

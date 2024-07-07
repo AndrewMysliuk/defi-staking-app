@@ -1,8 +1,12 @@
 import Web3, { Contract, ContractAbi } from "web3"
+// import { initWeb3 } from "@/shared/plugins"
 import type { ITetherContract, IRWDContract, IDecentralBankContract } from "@/shared/types"
 import Tether from "@/truffle_abis/Tether.json"
 import RWD from "@/truffle_abis/RWD.json"
 import DecentralBank from "@/truffle_abis/DecentralBank.json"
+
+// const OWNER_ADDRESS = "0xdb229Aa883304b85950c2D0f93Bad05951cEf850"
+// const OWNER_PRIVATE_KEY = "0xbf720841b32a9d33886726a3635a898bc8fc8f8466190ad88ef94a49ebff76b8"
 
 // Get Accounts
 export const getAccounts = async (web3: Web3) => {
@@ -92,3 +96,41 @@ export const unstakeTokensFromDecentralBank = async (decentral_bank_contract: Co
     throw error
   }
 }
+
+// Give Reward For User Mock
+// export const giveRewardForUser = async (decentral_bank_contract: Contract<ContractAbi> | null) => {
+//   try {
+//     const web3 = await initWeb3()
+
+//     if (!web3) return
+
+//     const nonce = await web3.eth.getTransactionCount(OWNER_ADDRESS, "latest")
+//     const gasPrice = await web3.eth.getGasPrice()
+//     const gasLimit = 3000000
+
+//     const data = decentral_bank_contract?.methods.issueTokens().encodeABI()
+
+//     const txParams = {
+//       nonce: web3.utils.toHex(nonce),
+//       gasPrice: web3.utils.toHex(gasPrice),
+//       gasLimit: web3.utils.toHex(gasLimit),
+//       to: decentral_bank_contract?.options.address,
+//       value: "0x0",
+//       data: data,
+//     }
+
+//     const common = Common.custom({}, { baseChain: "mainnet" })
+
+//     const tx = LegacyTransaction.fromTxData(txParams, { common })
+//     const privateKeyBuffer = Buffer.from(OWNER_PRIVATE_KEY, "hex")
+//     const signedTx = tx.sign(privateKeyBuffer)
+
+//     const serializedTx = signedTx.serialize()
+
+//     const receipt = await web3.eth.sendSignedTransaction("0x" + serializedTx.toString())
+
+//     console.log("Reward transaction hash:", receipt.transactionHash)
+//   } catch (error: unknown) {
+//     throw error
+//   }
+// }

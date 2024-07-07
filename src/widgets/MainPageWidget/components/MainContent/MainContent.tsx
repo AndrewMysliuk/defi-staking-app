@@ -75,7 +75,7 @@ const MainContent: FC<MainContentProps> = ({ tetherContract, decentralBankContra
         </button>
         <div className="main-content__airdrop card-body text-center" style={{ color: "blue" }}>
           AIRDROP
-          <Airdrop />
+          <Airdrop decentralBankContract={decentralBankContract} />
         </div>
       </div>
     </div>

@@ -7,10 +7,7 @@ const initialStore: BankingState = {
   stakingBalance: "0",
 }
 
-export default function bankingReducer(
-  state = initialStore,
-  action: BankingAction
-): BankingState {
+export default function bankingReducer(state = initialStore, action: BankingAction): BankingState {
   switch (action.type) {
     case BankingActionEnum.SET_ACCOUNT_VALUE:
       return { ...state, accountValue: action.payload }

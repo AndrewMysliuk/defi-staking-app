@@ -44,6 +44,29 @@ export const initBlockChainData = async (web3: Web3, dispatch: AppDispatch) => {
     dispatch(allActionCreators.setRwdBalance(rwdBal.toString()))
     dispatch(allActionCreators.setStakingBalance(stakingBalance.toString()))
 
+    // Tether Contract Events
+    tetherContract.events.Transfer({ filter: { to: account } }).on("data", (event) => {
+      const newBalance = event.returnValues.value as string
+      dispatch(allActionCreators.setTetherBalance(newBalance.toString()))
+    })
+
+    // RWD Contract Events
+    rwdContract.events.Transfer({ filter: { to: account } }).on("data", (event) => {
+      const newBalance = event.returnValues.value as string
+      dispatch(allActionCreators.setRwdBalance(newBalance.toString()))
+    })
+
+    // Decentral Bank Contract Events
+    decentralBankContract.events.Deposit({ filter: { user: account } }).on("data", (event) => {
+      const newBalance = event.returnValues.amount as string
+      dispatch(allActionCreators.setStakingBalance(newBalance.toString()))
+    })
+
+    decentralBankContract.events.Unstake({ filter: { user: account } }).on("data", (event) => {
+      const newBalance = event.returnValues.amount as string
+      dispatch(allActionCreators.setStakingBalance(newBalance.toString()))
+    })
+
     return { tetherContract, rwdContract, decentralBankContract }
   } catch (error: unknown) {
     throw error

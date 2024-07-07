@@ -11,7 +11,6 @@ const MainPageWidget = () => {
   const { isLoading } = useTypedSelector((state) => state.common)
 
   const [tetherContract, setTetherContract] = useState<Contract<ContractAbi> | null>(null)
-  const [rwdContract, setRwdContract] = useState<Contract<ContractAbi> | null>(null)
   const [decentralBankContract, setDecentralBankContract] = useState<Contract<ContractAbi> | null>(null)
 
   const initializeBlockchain = useCallback(async () => {
@@ -19,7 +18,6 @@ const MainPageWidget = () => {
 
     if (contracts) {
       setTetherContract(contracts.tetherContract)
-      setRwdContract(contracts.rwdContract)
       setDecentralBankContract(contracts.decentralBankContract)
     }
   }, [dispatch])
