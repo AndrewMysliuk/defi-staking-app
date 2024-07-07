@@ -1,24 +1,43 @@
 import { FC, useState } from "react"
 import "./MainContent.scss"
-import Web3 from "web3"
-import { useTypedSelector } from "@/shared/hooks"
+import Web3, { Contract, ContractAbi } from "web3"
+import { stakeTokensOnDecentralBank, unstakeTokensFromDecentralBank } from "@/shared/api"
+import { useActions, useTypedSelector } from "@/shared/hooks"
 import { Airdrop } from "./ui"
 
 interface MainContentProps {
-  stakeTokens: (amount: string) => void
-  unstakeTokens: () => void
+  tetherContract: Contract<ContractAbi> | null
+  decentralBankContract: Contract<ContractAbi> | null
 }
 
-const MainContent: FC<MainContentProps> = ({ stakeTokens, unstakeTokens }) => {
-  const { tetherBalance, rwdBalance, stakingBalance } = useTypedSelector((state) => state.banking)
+const MainContent: FC<MainContentProps> = ({ tetherContract, decentralBankContract }) => {
+  const { accountValue, tetherBalance, rwdBalance, stakingBalance } = useTypedSelector((state) => state.banking)
+  const { setIsLoading } = useActions()
+
   const [inputValue, setInputValue] = useState<string>("")
 
-  const depositHandler = () => {
-    stakeTokens(Web3.utils.toWei(inputValue, "ether"))
+  const depositHandler = async () => {
+    try {
+      setIsLoading(true)
+
+      await stakeTokensOnDecentralBank(tetherContract, decentralBankContract, accountValue, Web3.utils.toWei(inputValue, "ether"))
+    } catch (error) {
+      console.error("Error in stakeTokens:", error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const withdrawHandler = () => {
-    unstakeTokens()
+  const withdrawHandler = async () => {
+    try {
+      setIsLoading(true)
+
+      await unstakeTokensFromDecentralBank(decentralBankContract, accountValue)
+    } catch (error) {
+      console.error("Error in unstakeTokens:", error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -56,7 +75,7 @@ const MainContent: FC<MainContentProps> = ({ stakeTokens, unstakeTokens }) => {
         </button>
         <div className="main-content__airdrop card-body text-center" style={{ color: "blue" }}>
           AIRDROP
-          <Airdrop stakingBalance={stakingBalance} />
+          <Airdrop />
         </div>
       </div>
     </div>
