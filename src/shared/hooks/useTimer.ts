@@ -4,15 +4,16 @@ import { ITime } from "@/shared/types"
 
 export const useTimer = (initialSeconds: number) => {
   const [time, setTime] = useState<ITime>(secondsToTime(initialSeconds))
-  const [seconds, setSeconds] = useState<number>(initialSeconds)
+  const [, setSeconds] = useState<number>(initialSeconds)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   const countDown = useCallback(() => {
     setSeconds((prevSeconds) => {
       const newSeconds = prevSeconds - 1
-      setTime(secondsToTime(newSeconds))
-      if (newSeconds <= 0 && timerRef.current) {
-        clearInterval(timerRef.current)
+      if (newSeconds >= 0) {
+        setTime(secondsToTime(newSeconds))
+      } else {
+        clearInterval(timerRef.current!)
         timerRef.current = null
       }
       return newSeconds
@@ -20,14 +21,19 @@ export const useTimer = (initialSeconds: number) => {
   }, [])
 
   const startTimer = useCallback(() => {
-    if (timerRef.current === null && seconds > 0) {
+    if (timerRef.current === null) {
       timerRef.current = setInterval(countDown, 1000)
     }
-  }, [seconds, countDown])
+  }, [countDown])
 
-  useEffect(() => {
-    setTime(secondsToTime(seconds))
-  }, [seconds])
+  const resetTimer = useCallback(() => {
+    setSeconds(initialSeconds)
+    setTime(secondsToTime(initialSeconds))
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+  }, [initialSeconds])
 
   useEffect(() => {
     return () => {
@@ -37,5 +43,5 @@ export const useTimer = (initialSeconds: number) => {
     }
   }, [])
 
-  return { time, startTimer, resetTimer: () => setSeconds(initialSeconds) }
+  return { time, startTimer, resetTimer }
 }

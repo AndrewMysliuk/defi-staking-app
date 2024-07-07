@@ -1,24 +1,25 @@
 import { FC, useCallback, useEffect } from "react"
 import "./Airdrop.scss"
-import { Contract, ContractAbi } from "web3"
+import Web3, { Contract, ContractAbi } from "web3"
 import { useTypedSelector, useTimer } from "@/shared/hooks"
-// import { giveRewardForUser } from "@/shared/api"
+import { giveRewardForUser } from "@/shared/api"
 
 interface AirdropProps {
   decentralBankContract: Contract<ContractAbi> | null
+  web3Instance: Web3 | null
 }
 
-const Airdrop: FC<AirdropProps> = ({ decentralBankContract }) => {
-  const { stakingBalance } = useTypedSelector((state) => state.banking)
+const Airdrop: FC<AirdropProps> = ({ decentralBankContract, web3Instance }) => {
+  const { accountValue, stakingBalance } = useTypedSelector((state) => state.banking)
   const { time, startTimer, resetTimer } = useTimer(20)
 
   const handleReward = useCallback(() => {
-    if (decentralBankContract) {
-      // giveRewardForUser(decentralBankContract)
-      console.log("TODO Rewards")
+    if (decentralBankContract && web3Instance) {
+      giveRewardForUser(web3Instance, decentralBankContract, accountValue)
     }
     resetTimer()
-  }, [decentralBankContract, resetTimer])
+    startTimer()
+  }, [decentralBankContract, resetTimer, startTimer, accountValue, web3Instance])
 
   useEffect(() => {
     if (parseFloat(stakingBalance) >= 50) {

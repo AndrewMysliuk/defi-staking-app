@@ -80,7 +80,7 @@ export const initBlockchain = async (dispatch: AppDispatch) => {
     if (web3Instance) {
       const { tetherContract, rwdContract, decentralBankContract } = await initBlockChainData(web3Instance, dispatch)
 
-      return { tetherContract, rwdContract, decentralBankContract }
+      return { web3Instance, tetherContract, rwdContract, decentralBankContract }
     }
   } catch (error: unknown) {
     console.log("Web3 Initialization Error: ", error)

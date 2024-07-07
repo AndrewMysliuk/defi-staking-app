@@ -6,7 +6,7 @@ import {
   getDecentralBankContract,
   stakeTokensOnDecentralBank,
   unstakeTokensFromDecentralBank,
-  // giveRewardForUser,
+  giveRewardForUser,
 } from "./web3"
 
 export {
@@ -17,5 +17,5 @@ export {
   getDecentralBankContract,
   stakeTokensOnDecentralBank,
   unstakeTokensFromDecentralBank,
-  // giveRewardForUser,
+  giveRewardForUser,
 }

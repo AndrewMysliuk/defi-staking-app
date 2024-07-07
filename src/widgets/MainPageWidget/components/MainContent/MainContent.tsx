@@ -8,9 +8,10 @@ import { Airdrop } from "./ui"
 interface MainContentProps {
   tetherContract: Contract<ContractAbi> | null
   decentralBankContract: Contract<ContractAbi> | null
+  web3Instance: Web3 | null
 }
 
-const MainContent: FC<MainContentProps> = ({ tetherContract, decentralBankContract }) => {
+const MainContent: FC<MainContentProps> = ({ tetherContract, decentralBankContract, web3Instance }) => {
   const { accountValue, tetherBalance, rwdBalance, stakingBalance } = useTypedSelector((state) => state.banking)
   const { setIsLoading } = useActions()
 
@@ -75,7 +76,7 @@ const MainContent: FC<MainContentProps> = ({ tetherContract, decentralBankContra
         </button>
         <div className="main-content__airdrop card-body text-center" style={{ color: "blue" }}>
           AIRDROP
-          <Airdrop decentralBankContract={decentralBankContract} />
+          <Airdrop decentralBankContract={decentralBankContract} web3Instance={web3Instance} />
         </div>
       </div>
     </div>

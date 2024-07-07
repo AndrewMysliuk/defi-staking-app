@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import "./MainPageWidget.scss"
-import { Contract, ContractAbi } from "web3"
+import Web3, { Contract, ContractAbi } from "web3"
 import { initBlockchain } from "@/shared/plugins"
 import { useTypedSelector, useAppDispatch } from "@/shared/hooks"
 import { TheNavbar } from "@/shared/components"
@@ -10,6 +10,7 @@ const MainPageWidget = () => {
   const dispatch = useAppDispatch()
   const { isLoading } = useTypedSelector((state) => state.common)
 
+  const [web3Instance, setWeb3Instance] = useState<Web3 | null>(null)
   const [tetherContract, setTetherContract] = useState<Contract<ContractAbi> | null>(null)
   const [decentralBankContract, setDecentralBankContract] = useState<Contract<ContractAbi> | null>(null)
 
@@ -17,6 +18,7 @@ const MainPageWidget = () => {
     const contracts = await initBlockchain(dispatch)
 
     if (contracts) {
+      setWeb3Instance(contracts.web3Instance)
       setTetherContract(contracts.tetherContract)
       setDecentralBankContract(contracts.decentralBankContract)
     }
@@ -39,7 +41,7 @@ const MainPageWidget = () => {
               {isLoading ? (
                 <p className="text-center">Loading</p>
               ) : (
-                <MainContent tetherContract={tetherContract} decentralBankContract={decentralBankContract} />
+                <MainContent tetherContract={tetherContract} decentralBankContract={decentralBankContract} web3Instance={web3Instance} />
               )}
             </div>
           </main>
